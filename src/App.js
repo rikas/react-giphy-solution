@@ -1,26 +1,51 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component, Fragment } from 'react';
 import './App.css';
+import Gif from './components/Gif';
+import GifList from './components/GifList';
+import Search from './components/Search';
+import giphy from 'giphy-api';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  state = {
+    ids: [],
+    selectedID: 'tOWyML1WPzKjm' // initial value
+  }
+
+  onGifSelect = (id) => {
+    this.setState({ selectedID: id });
+  }
+
+  handleSearch = (event) => {
+    const { value } = event.target;
+
+    giphy('KI1wl2DyhOo41x2tscGMTti9cT1HeaeB').search({
+        q: value,
+        rating: 'g',
+        limit: 10
+      })
+      .then(res => {
+        console.log(res);
+        this.setState({ ids: res.data.map(gif => gif.id) });
+      });
+  }
+
+  render() {
+    const { ids } = this.state;
+
+    return (
+      <Fragment>
+        <div className="left-scene">
+          <Search onChange={this.handleSearch} />
+          <div className="selected-gif">
+            <Gif id={this.state.selectedID} />
+          </div>
+        </div>
+        <div className="right-scene">
+          <GifList ids={ids} onSelect={this.onGifSelect} />
+        </div>
+      </Fragment>
+    );
+  }
 }
 
 export default App;
