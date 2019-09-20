@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import './App.css';
 import Gif from './components/Gif';
 import GifList from './components/GifList';
@@ -33,7 +33,7 @@ class App extends Component {
     const { ids } = this.state;
 
     return (
-      <Fragment>
+      <div>
         <div className="left-scene">
           <Search onChange={this.handleSearch} />
           <div className="selected-gif">
@@ -43,7 +43,7 @@ class App extends Component {
         <div className="right-scene">
           <GifList ids={ids} onSelect={this.onGifSelect} />
         </div>
-      </Fragment>
+      </div>
     );
   }
 }
