@@ -1,22 +1,13 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 // <Gif id="tOWyML1WPzKjm" />
 // id comes from props.id
-class Gif extends Component {
-  handleClick = () => {
-    const { id, onClick } = this.props;
+const Gif = ({ id, onSelect }) => {
+  const url = `https://media2.giphy.com/media/${id}/200w.webp`;
 
-    onClick(id);
-  }
-
-  render() {
-    const { id } = this.props;
-    const url = `https://media2.giphy.com/media/${id}/200w.webp`;
-
-    return (
-      <img src={url} alt="Gif from Giphy" className="gif" onClick={this.handleClick} />
-    );
-  }
-}
+  return (
+    <img src={url} alt="Gif from Giphy" className="gif" onClick={() => onSelect(id)} />
+  );
+};
 
 export default Gif;

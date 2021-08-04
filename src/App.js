@@ -1,51 +1,41 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import Gif from './components/Gif';
 import GifList from './components/GifList';
 import Search from './components/Search';
 import giphy from 'giphy-api';
 
-class App extends Component {
-  state = {
-    ids: [],
-    selectedID: 'tOWyML1WPzKjm' // initial value
-  }
+const API_KEY = 'KI1wl2DyhOo41x2tscGMTti9cT1HeaeB';
 
-  onGifSelect = (id) => {
-    this.setState({ selectedID: id });
-  }
+const App = () => {
+  const [ids, setIds] = useState([]);
+  const [selectedId, setSelectedId] = useState('tOWyML1WPzKjm');
 
-  handleSearch = (event) => {
-    const { value } = event.target;
+  const handleSearch = (text) => {
+    const options = {
+      q: text,
+      rating: 'g',
+      limit: 10
+    };
 
-    giphy('KI1wl2DyhOo41x2tscGMTti9cT1HeaeB').search({
-        q: value,
-        rating: 'g',
-        limit: 10
-      })
-      .then(res => {
-        console.log(res);
-        this.setState({ ids: res.data.map(gif => gif.id) });
-      });
-  }
+    giphy(API_KEY).search(options).then((res) => setIds(res.data.map(gif => gif.id)));
+  };
 
-  render() {
-    const { ids } = this.state;
+  return (
+    <div>
+      <div className="left-scene">
+        <Search onChange={handleSearch} />
 
-    return (
-      <div>
-        <div className="left-scene">
-          <Search onChange={this.handleSearch} />
-          <div className="selected-gif">
-            <Gif id={this.state.selectedID} />
-          </div>
-        </div>
-        <div className="right-scene">
-          <GifList ids={ids} onSelect={this.onGifSelect} />
+        <div className="selected-gif">
+          <Gif id={selectedId} />
         </div>
       </div>
-    );
-  }
+
+      <div className="right-scene">
+        <GifList ids={ids} onSelect={setSelectedId} />
+      </div>
+    </div>
+  );
 }
 
 export default App;

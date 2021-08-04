@@ -7,7 +7,7 @@ const Search = ({ onChange }) => {
       minLength={2}
       debounceTimeout={300}
       type="text"
-      onChange={onChange}
+      onChange={(event) => onChange(event.target.value)}
       className="form-search form-control" />
   );
 }
