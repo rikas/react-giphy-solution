@@ -73,19 +73,23 @@ body {
   margin: 0px;
 }
 
-.gif-list .link {
+.gif-list .button {
   display: inline-flex;
+  border: 0;
+  margin: 0;
+  padding: 0;
+  outline: none;
 }
 
-.gif-list .link .gif {
+.gif-list .button .gif {
   filter: grayscale(60%);
 }
 
-.gif-list .link:hover {
+.gif-list .button:hover {
   background-color: green;
 }
 
-.gif-list .link:hover .gif {
+.gif-list .button:hover .gif {
   filter: grayscale(0%);
   opacity: .8;
 }
