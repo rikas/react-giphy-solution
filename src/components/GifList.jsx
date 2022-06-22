@@ -1,10 +1,13 @@
-import React from 'react';
 import Gif from './Gif';
 
 const GifList = ({ ids, onSelect }) => (
   <div className="gif-list">
-    {ids.map(id => {
-      return <Gif key={id} id={id} onSelect={onSelect} />
+    {ids.map((id) => {
+      return (
+        <a key={id} className="link" href="#" onClick={() => onSelect(id)}>
+          <Gif id={id} />
+        </a>
+      );
     })}
   </div>
 );

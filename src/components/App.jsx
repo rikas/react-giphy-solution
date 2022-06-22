@@ -1,11 +1,9 @@
-import React, { useState } from 'react';
-import './App.css';
-import Gif from './components/Gif';
-import GifList from './components/GifList';
-import Search from './components/Search';
+import { useState } from 'react';
 import giphy from 'giphy-api';
 
-const API_KEY = 'KI1wl2DyhOo41x2tscGMTti9cT1HeaeB';
+import Gif from './Gif';
+import GifList from './GifList';
+import Search from './Search';
 
 const App = () => {
   const [ids, setIds] = useState([]);
@@ -15,10 +13,12 @@ const App = () => {
     const options = {
       q: text,
       rating: 'g',
-      limit: 10
+      limit: 15,
     };
 
-    giphy(API_KEY).search(options).then((res) => setIds(res.data.map(gif => gif.id)));
+    giphy(process.env.REACT_APP_GIPHY_API_KEY)
+      .search(options)
+      .then((res) => setIds(res.data.map((gif) => gif.id)));
   };
 
   return (
@@ -36,6 +36,6 @@ const App = () => {
       </div>
     </div>
   );
-}
+};
 
 export default App;
